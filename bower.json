@@ -1,0 +1,33 @@
+{
+  "name": "angular-facebook",
+  "version": "0.0.1",
+  "homepage": "https://github.com/joonho1101/angular-facebook",
+  "authors": [
+    "Joon Ho Cho <joonho1101@gmail.com>"
+  ],
+  "description": "A Facebook SDK wrapper service for Angular.js",
+  "main": "src/angular-facebook.js",
+  "keywords": [
+    "facebook",
+    "sdk",
+    "angular.js",
+    "javascript",
+    "wrapper"
+    "service"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "coverage",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.12"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.12"
+  }
+}
