@@ -1,4 +1,4 @@
 angular-facebook
 ================
 
-Facebook SDK wrapper for Angular.js
+A Facebook SDK wrapper service for Angular.js
