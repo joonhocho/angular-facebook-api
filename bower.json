@@ -12,7 +12,7 @@
     "sdk",
     "angular.js",
     "javascript",
-    "wrapper"
+    "wrapper",
     "service"
   ],
   "license": "MIT",

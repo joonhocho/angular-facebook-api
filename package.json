@@ -20,7 +20,7 @@
     "sdk",
     "angular.js",
     "javascript",
-    "wrapper"
+    "wrapper",
     "service"
   ],
   "author": "Joon Ho Cho <joonho1101@gmail.com>",
