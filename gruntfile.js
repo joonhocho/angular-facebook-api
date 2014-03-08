@@ -15,7 +15,7 @@ module.exports = function (grunt) {
 
 		v: {
 			banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %> */\n',
-			name: 'angular-facebook',
+			name: 'angular-facebook-api',
 			src: 'src',
 			srcJs: '<%= v.src %>/**/*.js',
 			dist: 'dist',

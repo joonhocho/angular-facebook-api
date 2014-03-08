@@ -1,8 +1,8 @@
 {
-  "name": "angular-facebook",
+  "name": "angular-facebook-api",
   "version": "0.0.1",
   "description": "A Facebook SDK wrapper service for Angular.js",
-  "main": "src/angular-facebook.js",
+  "main": "src/angular-facebook-api.js",
   "directories": {
     "example": "example",
     "test": "test"
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/joonho1101/angular-facebook.git"
+    "url": "https://github.com/joonho1101/angular-facebook-api.git"
   },
   "keywords": [
     "facebook",
@@ -26,9 +26,9 @@
   "author": "Joon Ho Cho <joonho1101@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/joonho1101/angular-facebook/issues"
+    "url": "https://github.com/joonho1101/angular-facebook-api/issues"
   },
-  "homepage": "https://github.com/joonho1101/angular-facebook",
+  "homepage": "https://github.com/joonho1101/angular-facebook-api",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-concat": "~0.3.0",

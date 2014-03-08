@@ -1,12 +1,12 @@
 {
-  "name": "angular-facebook",
+  "name": "angular-facebook-api",
   "version": "0.0.1",
-  "homepage": "https://github.com/joonho1101/angular-facebook",
+  "homepage": "https://github.com/joonho1101/angular-facebook-api",
   "authors": [
     "Joon Ho Cho <joonho1101@gmail.com>"
   ],
   "description": "A Facebook SDK wrapper service for Angular.js",
-  "main": "src/angular-facebook.js",
+  "main": "src/angular-facebook-api.js",
   "keywords": [
     "facebook",
     "sdk",
