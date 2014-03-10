@@ -102,7 +102,7 @@ angular.module('jun.facebook', [])
 			}
 
 			FBPromise = deferred.promise;
-			return FBPromise;
+			return that;
 		}
 	];
 

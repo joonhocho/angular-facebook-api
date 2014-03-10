@@ -1,4 +1,4 @@
-/*! angular-facebook-api - v0.0.7 - 2014-03-10 */
+/*! angular-facebook-api - v0.0.9 - 2014-03-10 */
 /* global angular */
 angular.module('jun.facebook', [])
 
@@ -103,7 +103,7 @@ angular.module('jun.facebook', [])
 			}
 
 			FBPromise = deferred.promise;
-			return FBPromise;
+			return that;
 		}
 	];
 
