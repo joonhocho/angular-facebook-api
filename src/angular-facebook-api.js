@@ -45,7 +45,7 @@ angular.module('jun.facebook', [])
 		'hideFlashCallback',
 		'permissions'
 	], function (name) {
-		this[name] = angular.bind(getSetOption, this, name);
+		this[name] = angular.bind(this, getSetOption, name);
 	}, this);
 
 	this.option = function (name, val) {
@@ -110,7 +110,7 @@ angular.module('jun.facebook', [])
 		// https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
 		return FBPromise.then(function (FB) {
 			var deferred = $q.defer();
-			FB.getLoginStatus(angular.bind(deferred.resolve, deferred));
+			FB.getLoginStatus(angular.bind(deferred, deferred.resolve));
 			return deferred.promise;
 		});
 	};
@@ -187,7 +187,7 @@ angular.module('jun.facebook', [])
 		// https://developers.facebook.com/docs/reference/javascript/FB.logout
 		return FBPromise.then(function (FB) {
 			var deferred = $q.defer();
-			FB.logout(angular.bind(deferred.resolve, deferred));
+			FB.logout(angular.bind(deferred, deferred.resolve));
 			return deferred.promise;
 		});
 	};
