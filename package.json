@@ -1,6 +1,6 @@
 {
   "name": "angular-facebook-api",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A Facebook SDK wrapper service for Angular.js",
   "main": "src/angular-facebook-api.js",
   "directories": {
