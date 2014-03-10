@@ -1,4 +1,4 @@
-/*! angular-facebook-api - v0.0.10 - 2014-03-10 */
+/*! angular-facebook-api - v0.0.11 - 2014-03-10 */
 /* global angular */
 angular.module('jun.facebook', [])
 
@@ -44,7 +44,9 @@ angular.module('jun.facebook', [])
 		'authResponse',
 		'frictionlessRequests',
 		'hideFlashCallback',
-		'permissions'
+		'scope',
+		'enable_profile_selector',
+		'profile_selector_ids'
 	], function (name) {
 		that[name] = angular.bind(that, getSetOption, name);
 	});

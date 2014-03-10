@@ -43,7 +43,9 @@ angular.module('jun.facebook', [])
 		'authResponse',
 		'frictionlessRequests',
 		'hideFlashCallback',
-		'permissions'
+		'scope',
+		'enable_profile_selector',
+		'profile_selector_ids'
 	], function (name) {
 		that[name] = angular.bind(that, getSetOption, name);
 	});
