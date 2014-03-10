@@ -45,13 +45,13 @@ angular.module('jun.facebook', [])
 		'hideFlashCallback',
 		'permissions'
 	], function (name) {
-		this[name] = angular.bind(this, getSetOption, name);
-	}, this);
+		that[name] = angular.bind(that, getSetOption, name);
+	});
 
 	this.option = function (name, val) {
 		if (typeof name === 'object') {
 			angular.extend(options, name);
-			return this;
+			return that;
 		}
 		return getSetOption(name, val);
 	};

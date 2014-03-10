@@ -1,4 +1,4 @@
-/*! angular-facebook-api - v0.0.9 - 2014-03-10 */
+/*! angular-facebook-api - v0.0.10 - 2014-03-10 */
 /* global angular */
 angular.module('jun.facebook', [])
 
@@ -46,13 +46,13 @@ angular.module('jun.facebook', [])
 		'hideFlashCallback',
 		'permissions'
 	], function (name) {
-		this[name] = angular.bind(this, getSetOption, name);
-	}, this);
+		that[name] = angular.bind(that, getSetOption, name);
+	});
 
 	this.option = function (name, val) {
 		if (typeof name === 'object') {
 			angular.extend(options, name);
-			return this;
+			return that;
 		}
 		return getSetOption(name, val);
 	};
