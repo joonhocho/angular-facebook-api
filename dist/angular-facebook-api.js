@@ -1,4 +1,4 @@
-/*! angular-facebook-api - v0.0.16 - 2014-03-11 */
+/*! angular-facebook-api - v0.0.17 - 2014-03-11 */
 /* global angular */
 angular.module('jun.facebook', [])
 
