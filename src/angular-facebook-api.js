@@ -58,7 +58,7 @@ angular.module('jun.facebook', [])
 		return getSetOption(name, val);
 	};
 
-	var FBPromise, $q;
+	var FB, FBPromise, $q;
 
 	this.$get = [
 		'$window', '$timeout', '$q',
@@ -72,7 +72,7 @@ angular.module('jun.facebook', [])
 					document = window.document;
 
 				window.fbAsyncInit = function () {
-					var FB = window.FB;
+					FB = window.FB;
 					FB.init({
 						appId: options.appId,
 						cookie: options.cookie,
@@ -112,7 +112,14 @@ angular.module('jun.facebook', [])
 		// https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
 		return FBPromise.then(function (FB) {
 			var deferred = $q.defer();
-			FB.getLoginStatus(angular.bind(deferred, deferred.resolve));
+			FB.getLoginStatus(function (response) {
+				if (response) {
+					deferred.resolve(response);
+				}
+				else {
+					deferred.reject(response);
+				}
+			});
 			return deferred.promise;
 		});
 	};
@@ -187,19 +194,24 @@ angular.module('jun.facebook', [])
 
 	this.logout = function () {
 		// https://developers.facebook.com/docs/reference/javascript/FB.logout
-		return FBPromise.then(function (FB) {
+		return that.getLoginStatus().then(function (response) {
 			var deferred = $q.defer();
-			FB.logout(function (response) {
-				// true on app delete success
-				if (response) {
-					deferred.resolve(response);
-				}
-				else {
-					deferred.reject(response);
-				}
-			});
+			if (response.authResponse) {
+				FB.logout(function (response) {
+					if (response) {
+						deferred.resolve(response);
+					}
+					else {
+						deferred.reject(response);
+					}
+				});
+			}
+			else {
+				deferred.reject(response);
+			}
 			return deferred.promise;
 		});
+
 	};
 
 	this.disconnect = function () {
