@@ -1,9 +1,13 @@
-/*! angular-facebook-api - v0.0.15 - 2014-03-10 */
+/*! angular-facebook-api - v0.0.16 - 2014-03-11 */
 /* global angular */
 angular.module('jun.facebook', [])
 
 .provider('$FB', function $FBProvider() {
 	'use strict';
+
+	/*
+	 * Options
+	 */
 
 	var that = this,
 		options = {
@@ -61,6 +65,10 @@ angular.module('jun.facebook', [])
 
 	var FB, FBPromise, $q;
 
+	/*
+	 * Initialization
+	 */
+
 	this.$get = [
 		'$window', '$timeout', '$q',
 		function ($window, $timeout, $$q) {
@@ -73,7 +81,7 @@ angular.module('jun.facebook', [])
 					document = window.document;
 
 				window.fbAsyncInit = function () {
-					FB = window.FB;
+					FB = that.FB = window.FB;
 					FB.init({
 						appId: options.appId,
 						cookie: options.cookie,
@@ -109,19 +117,39 @@ angular.module('jun.facebook', [])
 		}
 	];
 
-	this.getLoginStatus = function () {
+	/*
+	 * Helpers
+	 */
+
+	/* jshint validthis: true */
+	function handleResponse(response) {
+		if (!response || response.error) {
+			this.reject(response && response.error || false);
+		}
+		else {
+			this.resolve(response);
+		}
+	}
+
+	function addCallbackToPromise(deferred, callback) {
+		var promise = deferred.promise;
+		if (typeof callback === 'function') {
+			promise.then(callback);
+		}
+		return promise;
+	}
+
+	/*
+	 * Public APIs
+	 */
+	this.getLoginStatus = function (callback) {
 		// https://developers.facebook.com/docs/reference/javascript/FB.getLoginStatus
 		return FBPromise.then(function (FB) {
 			var deferred = $q.defer();
-			FB.getLoginStatus(function (response) {
-				if (response) {
-					deferred.resolve(response);
-				}
-				else {
-					deferred.reject(response);
-				}
-			});
-			return deferred.promise;
+
+			FB.getLoginStatus(angular.bind(deferred, handleResponse));
+
+			return addCallbackToPromise(deferred, callback);
 		});
 	};
 
@@ -138,23 +166,11 @@ angular.module('jun.facebook', [])
 				callback = args.pop();
 			}
 
-			args.push(function (response) {
-				if (!response || response.error) {
-					deferred.reject(response || {
-						error: true
-					});
-				}
-				else {
-					deferred.resolve(response);
-				}
-			});
+			args.push(angular.bind(deferred, handleResponse));
 
 			FB.api.apply(FB, args);
 
-			if (callback) {
-				return deferred.promise.then(callback);
-			}
-			return deferred.promise;
+			return addCallbackToPromise(deferred, callback);
 		});
 	};
 
@@ -173,62 +189,41 @@ angular.module('jun.facebook', [])
 				return val === void 0 ? options[name] : val;
 			}
 
-			FB.login(function (response) {
-				if (response.authResponse) {
-					deferred.resolve(response);
-				}
-				else {
-					deferred.reject(response);
-				}
-			}, {
+			FB.login(angular.bind(deferred, handleResponse), {
 				scope: getOpt('scope'),
 				'enable_profile_selector': getOpt('enable_profile_selector'),
 				'profile_selector_ids': getOpt('profile_selector_ids')
 			});
 
-			if (callback) {
-				return deferred.promise.then(callback);
-			}
-			return deferred.promise;
+			return addCallbackToPromise(deferred, callback);
 		});
 	};
 
-	this.logout = function () {
+	this.logout = function (callback) {
 		// https://developers.facebook.com/docs/reference/javascript/FB.logout
 		return that.getLoginStatus().then(function (response) {
 			var deferred = $q.defer();
+
 			if (response.authResponse) {
-				FB.logout(function (response) {
-					if (response) {
-						deferred.resolve(response);
-					}
-					else {
-						deferred.reject(response);
-					}
-				});
+				FB.logout(angular.bind(deferred, handleResponse));
 			}
 			else {
 				deferred.reject(response);
 			}
-			return deferred.promise;
+
+			return addCallbackToPromise(deferred, callback);
 		});
 
 	};
 
-	this.disconnect = function () {
+	this.disconnect = function (callback) {
 		// http://stackoverflow.com/questions/6634212/remove-the-application-from-a-user-using-graph-api/7741978#7741978
 		return FBPromise.then(function (FB) {
 			var deferred = $q.defer();
-			FB.api('/me/permissions', 'DELETE', function (response) {
-				// true on app delete success
-				if (response === true) {
-					deferred.resolve(response);
-				}
-				else {
-					deferred.reject(response && response.error || response || false);
-				}
-			});
-			return deferred.promise;
+
+			FB.api('/me/permissions', 'DELETE', angular.bind(deferred, handleResponse));
+
+			return addCallbackToPromise(deferred, callback);
 		});
 	};
 });
