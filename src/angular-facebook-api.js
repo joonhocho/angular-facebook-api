@@ -193,4 +193,21 @@ angular.module('jun.facebook', [])
 			return deferred.promise;
 		});
 	};
+
+	this.disconnect = function () {
+		// http://stackoverflow.com/questions/6634212/remove-the-application-from-a-user-using-graph-api/7741978#7741978
+		return FBPromise.then(function (FB) {
+			var deferred = $q.defer();
+			FB.api('/me/permissions', 'DELETE', function (response) {
+				// gives true on app delete success
+				if (response) {
+					deferred.resolve(response);
+				}
+				else {
+					deferred.reject(response);
+				}
+			});
+			return deferred.promise;
+		});
+	};
 });
