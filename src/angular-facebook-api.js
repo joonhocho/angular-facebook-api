@@ -208,11 +208,11 @@ angular.module('jun.facebook', [])
 			var deferred = $q.defer();
 			FB.api('/me/permissions', 'DELETE', function (response) {
 				// true on app delete success
-				if (response) {
+				if (response === true) {
 					deferred.resolve(response);
 				}
 				else {
-					deferred.reject(response);
+					deferred.reject(response && response.error || response || false);
 				}
 			});
 			return deferred.promise;
