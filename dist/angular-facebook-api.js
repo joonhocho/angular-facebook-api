@@ -1,4 +1,4 @@
-/*! angular-facebook-api - v0.0.11 - 2014-03-10 */
+/*! angular-facebook-api - v0.0.12 - 2014-03-10 */
 /* global angular */
 angular.module('jun.facebook', [])
 
@@ -191,6 +191,23 @@ angular.module('jun.facebook', [])
 		return FBPromise.then(function (FB) {
 			var deferred = $q.defer();
 			FB.logout(angular.bind(deferred, deferred.resolve));
+			return deferred.promise;
+		});
+	};
+
+	this.disconnect = function () {
+		// http://stackoverflow.com/questions/6634212/remove-the-application-from-a-user-using-graph-api/7741978#7741978
+		return FBPromise.then(function (FB) {
+			var deferred = $q.defer();
+			FB.api('/me/permissions', 'DELETE', function (response) {
+				// gives true on app delete success
+				if (response) {
+					deferred.resolve(response);
+				}
+				else {
+					deferred.reject(response);
+				}
+			});
 			return deferred.promise;
 		});
 	};
