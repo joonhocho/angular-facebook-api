@@ -189,7 +189,15 @@ angular.module('jun.facebook', [])
 		// https://developers.facebook.com/docs/reference/javascript/FB.logout
 		return FBPromise.then(function (FB) {
 			var deferred = $q.defer();
-			FB.logout(angular.bind(deferred, deferred.resolve));
+			FB.logout(function (response) {
+				// true on app delete success
+				if (response) {
+					deferred.resolve(response);
+				}
+				else {
+					deferred.reject(response);
+				}
+			});
 			return deferred.promise;
 		});
 	};
@@ -199,7 +207,7 @@ angular.module('jun.facebook', [])
 		return FBPromise.then(function (FB) {
 			var deferred = $q.defer();
 			FB.api('/me/permissions', 'DELETE', function (response) {
-				// gives true on app delete success
+				// true on app delete success
 				if (response) {
 					deferred.resolve(response);
 				}
