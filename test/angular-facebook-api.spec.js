@@ -1,5 +1,5 @@
-/* jshint node: true, camelcase: false */
-/* global inject, describe, it, beforeEach, expect */
+/* jshint node: true, camelcase: false, maxstatements: 50 */
+/* global inject, describe, it, beforeEach, expect, spyOn */
 describe('Module: jun.facebook', function () {
 	'use strict';
 
@@ -16,7 +16,6 @@ describe('Module: jun.facebook', function () {
 	}));
 
 	describe('$FB', function () {
-
 		it('should not be loaded yet', function () {
 			expect($FB.FB).toBeNull();
 			expect($FB.loaded).toBe(false);
@@ -24,11 +23,14 @@ describe('Module: jun.facebook', function () {
 			expect($FB.initialized).toBe(false);
 			expect($document[0].getElementById('facebook-jssdk')).toBeNull();
 		});
+	});
 
-		it('should load script on calling load()', function () {
+	describe('$FB.load()', function () {
+		it('should load a Facebook SDK script', function () {
 			var FBReturned = null;
 
-			$FB.load().then(function (FB) {
+			var promise = $FB.load();
+			promise.then(function (FB) {
 				FBReturned = FB;
 			});
 
@@ -57,7 +59,11 @@ describe('Module: jun.facebook', function () {
 
 			// do it again
 			FBReturned = null;
-			$FB.load().then(function (FB) {
+
+			var newPromise = $FB.load();
+			expect(newPromise).toBe(promise);
+
+			newPromise.then(function (FB) {
 				FBReturned = FB;
 			});
 
@@ -72,7 +78,21 @@ describe('Module: jun.facebook', function () {
 
 			expect(FBReturned).toBe(FBMock);
 		});
+	});
 
+	describe('$FB.init()', function () {
+		it('should implicitly call load()', function () {
+			expect($FB.initialized).toBe(false);
+
+			var loadSpy = spyOn($FB, 'load').andCallThrough();
+
+			var promise = $FB.init();
+
+			expect(loadSpy).toHaveBeenCalled();
+			expect(loadSpy.mostRecentCall.args.length).toBe(0);
+
+			expect($FB.initialized).toBe(false);
+		});
 	});
 
 });
