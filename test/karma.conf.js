@@ -35,7 +35,7 @@ module.exports = function (config) {
 		// - Safari (only Mac)
 		// - PhantomJS
 		// - IE (only Windows)
-		browsers: ['PhantomJS', 'Chrome', 'Safari', 'Firefox'],
+		browsers: ['PhantomJS'],
 
 		// logLevel: LOG_DEBUG,
 

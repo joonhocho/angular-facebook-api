@@ -103,6 +103,9 @@ angular.module('jun.facebook', [])
 	/*
 	 * Public APIs
 	 */
+	this.loading = false;
+	this.loaded = false;
+	this.FB = null;
 
 	this.load = function () {
 		if (!FBPromise) {
@@ -112,6 +115,9 @@ angular.module('jun.facebook', [])
 			// https://developers.facebook.com/docs/javascript/quickstart
 			window.fbAsyncInit = function () {
 				FB = that.FB = window.FB;
+				that.loading = false;
+				that.loaded = true;
+
 				$timeout(function () {
 					deferred.resolve(FB);
 				});
@@ -128,10 +134,14 @@ angular.module('jun.facebook', [])
 				fjs.parentNode.insertBefore(js, fjs);
 			}(window.document, 'script', 'facebook-jssdk'));
 
+			that.loading = true;
+
 			FBPromise = deferred.promise;
 		}
 		return FBPromise;
 	};
+
+	this.initialized = false;
 
 	this.init = function (params) {
 		if (!initPromise) {
@@ -152,6 +162,9 @@ angular.module('jun.facebook', [])
 				}
 
 				FB.init(params);
+
+				that.initialized = true;
+
 				return FB;
 			});
 		}
