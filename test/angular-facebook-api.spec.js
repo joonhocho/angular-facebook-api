@@ -39,7 +39,8 @@ describe('Module: jun.facebook', function () {
 			expect($FB.initialized).toBe(false);
 
 			var script = $document[0].getElementById('facebook-jssdk');
-			expect(script).not.toBeNull();
+			expect(script).toBeTruthy();
+			expect(script.nodeName).toBe('SCRIPT');
 			expect(script.src).toContain('facebook');
 
 			$timeout(function () {
@@ -55,7 +56,6 @@ describe('Module: jun.facebook', function () {
 			expect($FB.initialized).toBe(false);
 
 			// do it again
-
 			FBReturned = null;
 			$FB.load().then(function (FB) {
 				FBReturned = FB;
