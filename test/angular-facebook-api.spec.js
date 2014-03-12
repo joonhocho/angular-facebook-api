@@ -1,5 +1,5 @@
 /* jshint node: true, camelcase: false */
-/* global inject, describe, it, beforeEach, expect, waitsFor, runs */
+/* global inject, describe, it, beforeEach, expect */
 describe('Module: jun.facebook', function () {
 	'use strict';
 
