@@ -5,7 +5,8 @@ describe('Module: jun.facebook', function () {
 
 	beforeEach(module('jun.facebook'));
 
-	var $timeout, $window, $document, $FB;
+	var $timeout, $window, $document, $FB,
+		FBMock = {};
 
 	beforeEach(inject(function (_$timeout_, _$window_, _$document_, _$FB_) {
 		$timeout = _$timeout_;
@@ -25,8 +26,7 @@ describe('Module: jun.facebook', function () {
 		});
 
 		it('should load script on calling load()', function () {
-			var FBMock = {},
-				FBReturned = null;
+			var FBReturned = null;
 
 			$FB.load().then(function (FB) {
 				FBReturned = FB;
@@ -60,6 +60,10 @@ describe('Module: jun.facebook', function () {
 			$FB.load().then(function (FB) {
 				FBReturned = FB;
 			});
+
+			// should stay the same
+			expect($FB.loaded).toBe(true);
+			expect($FB.loading).toBe(false);
 
 			// should be always async
 			expect(FBReturned).toBeNull();
